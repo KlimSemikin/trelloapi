@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_03_113718) do
+ActiveRecord::Schema.define(version: 2022_02_03_140601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cards", force: :cascade do |t|
+    t.bigint "column_id", null: false
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["column_id"], name: "index_cards_on_column_id"
+    t.index ["title"], name: "index_cards_on_title"
+    t.index ["user_id"], name: "index_cards_on_user_id"
+  end
 
   create_table "columns", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -47,5 +59,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_113718) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "cards", "columns"
+  add_foreign_key "cards", "users"
   add_foreign_key "columns", "users"
 end
