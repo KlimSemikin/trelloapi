@@ -7,4 +7,8 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   validates :email, length: { maximum: 100 }
+
+  has_many :columns
+  has_many :cards
+  has_many :comments
 end
