@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   validates :email, length: { maximum: 100 }
 
-  has_many :columns
-  has_many :cards
-  has_many :comments
+  has_many :columns, dependent: :destroy
+  has_many :cards, dependent: :destroy
+  has_many :comments, dependent: :destroy
 end
