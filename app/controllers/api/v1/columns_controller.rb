@@ -1,6 +1,6 @@
 class Api::V1::ColumnsController < ApplicationController
-  before_action :authenticate_api_v1_user!, only: [:create, :destroy]
-  before_action :current_user_owner, only: [:create, :destroy]
+  before_action :authenticate_api_v1_user!, only: [:create, :destroy, :update]
+  before_action :current_user_owner, only: [:create, :destroy, :update]
 
   # GET /columns
   def index
@@ -32,6 +32,16 @@ class Api::V1::ColumnsController < ApplicationController
       head(:ok)
     else
       # Что-то пошло не так
+      head(:unprocessable_entity)
+    end
+  end
+
+  # PUT /columns
+  def update
+    @column = Column.find(params[:id]).update(col_params)
+    if @column
+      head(:created)
+    else
       head(:unprocessable_entity)
     end
   end
