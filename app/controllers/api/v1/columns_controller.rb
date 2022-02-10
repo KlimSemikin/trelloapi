@@ -38,8 +38,8 @@ class Api::V1::ColumnsController < ApplicationController
 
   # PUT /columns
   def update
-    @column = Column.find(params[:id]).update(col_params)
-    if @column
+    @column = Column.find(params[:id])
+    if @column.update(col_params.permit(:title))
       head(:created)
     else
       head(:unprocessable_entity)

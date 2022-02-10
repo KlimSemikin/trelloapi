@@ -38,7 +38,7 @@ class Api::V1::CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     if current_user_comment_owner(@comment)
-      if @comment.update(card_params)
+      if @comment.update(card_params.permit(:content))
         head(:ok)
       else
         head(:unprocessable_entity)

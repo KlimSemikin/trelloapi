@@ -32,8 +32,8 @@ class Api::V1::CardsController < ApplicationController
   end
 
   def update
-    @card = Card.find(params[:id]).update(card_params)
-    if @card
+    @card = Card.find(params[:id])
+    if @card.update(card_params.permit(:title, :description))
       head(:ok)
     else
       # Что-то пошло не так
